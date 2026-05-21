@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Language Translator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>🌍 Language Translator</h1>
+
+    <form method="POST">
+
+        <textarea
+            name="text"
+            placeholder="Enter text here..."
+            required
+        ></textarea>
+
+        <div class="dropdowns">
+
+            <div>
+                <label>Source Language</label>
+                <select name="source">
+                    {% for code, language in languages.items() %}
+                        <option value="{{ code }}">
+                            {{ language.title() }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div>
+                <label>Target Language</label>
+                <select name="target">
+                    {% for code, language in languages.items() %}
+                        <option value="{{ code }}">
+                            {{ language.title() }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+        </div>
+
+        <button type="submit">Translate</button>
+
+    </form>
+
+    {% if translated_text %}
+
+    <div class="result">
+        <h2>Translated Text</h2>
+
+        <p id="translatedText">{{ translated_text }}</p>
+
+        <button onclick="copyText()">Copy</button>
+
+        <button onclick="speakText()">🔊 Speak</button>
+    </div>
+
+    {% endif %}
+</div>
+
+<script>
+function copyText() {
+    const text =
+        document.getElementById("translatedText").innerText;
+
+    navigator.clipboard.writeText(text);
+
+    alert("Copied!");
+}
+
+function speakText() {
+    const text =
+        document.getElementById("translatedText").innerText;
+
+    const speech =
+        new SpeechSynthesisUtterance(text);
+
+    speech.lang = 'en-US';
+
+    window.speechSynthesis.speak(speech);
+}
+</script>
+
+</body>
+</html>
