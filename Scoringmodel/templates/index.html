@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Credit Scoring App</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static',
+          filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Credit Scoring Prediction</h1>
+
+    <form action="/predict" method="post">
+
+        <input type="number"
+               name="income"
+               placeholder="Income"
+               required>
+
+        <input type="number"
+               name="debt"
+               placeholder="Debt"
+               required>
+
+        <input type="number"
+               name="credit_history"
+               placeholder="Credit History"
+               required>
+
+        <input type="number"
+               name="loan_amount"
+               placeholder="Loan Amount"
+               required>
+
+        <input type="number"
+               name="missed_payments"
+               placeholder="Missed Payments"
+               required>
+
+        <button type="submit">
+            Predict
+        </button>
+
+    </form>
+
+    {% if prediction_text %}
+
+        <div class="result">
+            {{ prediction_text }}
+        </div>
+
+        <div class="score">
+            Credit Score: {{ score }}%
+        </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
